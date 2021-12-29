@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: slave
   tasks: 
  
     - name: Ping check host
@@ -34,3 +34,40 @@
       shell:
         cmd: "docker-compose -f docker-compose.yml up -d"
         chdir: /home/slave/jenkins/workspace/web-projec-lanh1
+
+---
+- hosts: slave2
+  tasks: 
+ 
+    - name: Ping check host
+      ping: ~
+
+    - name: del source
+      become: True
+      shell:
+        cmd: "sudo rm -rf web-projec-lanh1-1/"
+        chdir: /home/slave2/
+
+    - name: update source
+      become: True
+      shell:
+        cmd: "git clone https://github.com/kiemsibat/web-projec-lanh1-1.git"
+        chdir: /home/slave2/
+
+    - name: Stop container
+      become: True
+      shell:
+        cmd: "docker-compose down"
+        chdir: /home/slave2/web-projec-lanh1-1
+
+    - name: Rebuild container
+      become: True
+      shell:
+        cmd: "docker-compose build --no-cache"
+        chdir: /home/slave2/web-projec-lanh1-1
+
+    - name: Run container
+      become: True
+      shell:
+        cmd: "docker-compose -f docker-compose.yml up -d"
+        chdir: /home/slave2/web-projec-lanh1-1

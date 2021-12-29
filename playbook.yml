@@ -1,5 +1,5 @@
 ---
-- hosts: slave
+- hosts: server1
   tasks: 
  
     - name: Ping check host
@@ -35,7 +35,7 @@
         cmd: "docker-compose -f docker-compose.yml up -d"
         chdir: /home/slave/jenkins/workspace/web-projec-lanh1
 
-- hosts: slave2
+- hosts: server2
   tasks: 
  
     - name: Ping check host

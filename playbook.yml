@@ -35,7 +35,6 @@
         cmd: "docker-compose -f docker-compose.yml up -d"
         chdir: /home/slave/jenkins/workspace/web-projec-lanh1
 
----
 - hosts: slave2
   tasks: 
  
